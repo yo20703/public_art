@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class WorkRecyclerView extends ConstraintLayout {
+    Context context;
     public WorkRecyclerView(@NonNull Context context) {
         super(context);
         init(context);
@@ -45,12 +46,9 @@ public class WorkRecyclerView extends ConstraintLayout {
         init(context);
     }
 
-    private void init(Context context) {
-        inflate(context, R.layout.work_recycler, this);
-        // 開啟檔案
-
+    void loadJson(String fileName){
         try {
-            InputStream inputStream = context.getAssets().open("1館.json");
+            InputStream inputStream = context.getAssets().open(fileName);
             // 讀取檔案的全部位元組
             byte[] bytes = new byte[inputStream.available()];
             inputStream.read(bytes);
@@ -72,8 +70,12 @@ public class WorkRecyclerView extends ConstraintLayout {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
-
+    private void init(Context context) {
+        this.context = context;
+        inflate(context, R.layout.work_recycler, this);
+        // 開啟檔案
 
     }
 }
